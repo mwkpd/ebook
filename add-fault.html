@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Add Fault</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script> $(function () { $('header').load('header.html'); }); </script>
+</head>
+
+<body>
+    <header></header>
+    <div class="alert alert-info" style='display:none' id="alert" role="alert">
+        alert
+    </div>
+    <div class="container my-3">
+        <h4 id="heading">New Fault of </h4>
+        <form onsubmit="event.preventDefault()" name="myForm" id="myForm">
+            <div class="row">
+                <div class='mb-3 col-md-4 col-sm-12'>
+                    <label for='date' class='form-label float-start'>Ocuurred On Date</label>
+                    <input required type='date' class='form-control' id='date' name='date' value="2023-07-10">
+                </div>
+                <div class='mb-3 col-md-4 col-sm-12'>
+                    <label for='sub_category' class='form-label float-start'>Sub-Cateogry</label>
+                    <input required type='text' class='form-control' id='sub_category' name='sub_category'
+                        value="Drive Roller">
+                </div>
+
+                <div class='mb-3 col-md-4 col-sm-12'>
+                    <label for='rectification_date' class='form-label float-start'>Rectification Date</label>
+                    <input required type='date' class='form-control' id='rectification_date' name='rectification_date'
+                        value="2023-07-11">
+                </div>
+                <div class='mb-3'>
+                    <label for='fault' class='form-label float-start'>Fault</label>
+                    <textarea name="fault" class='form-control' id="fault" cols="30" rows="2"
+                        required>Fault in PWL</textarea>
+                </div>
+                <div class='mb-3'>
+                    <label for='rectification' class='form-label float-start'>Rectification</label>
+                    <textarea name="rectification" class='form-control' id="rectification" cols="30" rows="3"
+                        required>Oil found leaked</textarea>
+                </div>
+                <div class='mb-3 col-md-4 col-sm-12'>
+                    <label for='time' class='form-label float-start'>Time</label>
+                    <input required type='text' class='form-control' id='time' name='time' value="1 day">
+                </div>
+                <div class='mb-3 col-md-4 col-sm-12'>
+                    <label for='spares_used' class='form-label float-start'>Spares Used</label>
+                    <input required type='text' class='form-control' id='spares_used' name='spares_used' value="none">
+                </div>
+                <div class='mb-3 col-md-4 col-sm-12'>
+                    <label for='remark' class='form-label float-start'>Remark</label>
+                    <input required type='text' class='form-control' id='remark' name='remark' value="Tellus 46">
+                </div>
+                <div class="d-flex">
+                    <button type='submit' class='btn btn-primary'>Submit</button>
+                    <div class="spinner-border text-primary ms-3" style="display: none;" id="spinner" role="status">
+                        <span class="sr-only"></span>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <script>
+            let authKey = localStorage.getItem('authKey');
+            if (!authKey) {
+                window.location.href = "login.html";
+            }
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const machine = urlParams.get('machine')
+            $('#heading').text(`New fault of ${machine}`)
+            let form = document.forms['myForm']
+            form.addEventListener('submit', e => {
+                $('#spinner').show();
+                let formData = {
+                    authKey: localStorage.getItem('authKey'),
+                    machine: machine,
+                    date: document.getElementById('date').value,
+                    fault: document.getElementById('fault').value,
+                    sub_category: document.getElementById('sub_category').value,
+                    rectification_date: document.getElementById('rectification_date').value,
+                    rectification: document.getElementById('rectification').value,
+                    time: document.getElementById('time').value,
+                    spares_used: document.getElementById('spares_used').value,
+                    remark: document.getElementById('remark').value
+                };
+                fetch('https://script.google.com/macros/s/AKfycbwd5f322SUC3kmyR4AbX-ni5ZCuvYWndrp6rvUi6FOvH_lUziwukvxWZM6DYzKa7DLH/exec', {
+                    method: 'POST',
+                    body: JSON.stringify(formData),
+                })
+                    .then(response => response.json())
+                    .then(response => {
+                        if (response.message == 'success') {
+                            alert('Data saved')
+                            window.location.href = "/machine-faults.html?machine=" + machine;
+                        } else if (response.message == 'wrong authKey') {
+                            $('#alert').html("Error! Wrong authentication key. <a href='login.html' target='_blank'>Set Key</a>")
+                            $('#alert').show()
+                            alert('Error! Wrong auathentication key')
+                        } else {
+                            $('#alert').text('Error! Some error occurred')
+                            $('#alert').show()
+                        }
+                    })
+                    .catch(error => {
+                        $('#alert').text('Error! Some error occurred')
+                        $('#alert').show()
+                        // setTimeout(() => {
+                        //     $('#alert').hide()
+                        // }, 3000);
+                        console.error('Error:', error);
+                    })
+                    .finally(function () {
+                        $('#spinner').hide();
+                    });
+            })
+        </script>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
