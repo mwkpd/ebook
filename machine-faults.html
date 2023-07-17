@@ -30,10 +30,10 @@
             <table id="table_id" class="table-light table table-striped table-bordered w-100">
                 <thead>
                     <tr>
-                        <th style="width: 50px;">Date</th>
+                        <th style="width: 70px;">Date</th>
                         <th style="min-width: 250px;">Fault</th>
                         <th>Category</th>
-                        <th style="width: 50px;">Repair Date</th>
+                        <th style="width: 70px;">Repair Date</th>
                         <th style="min-width: 300px;">Investigation, findings and rectification</th>
                         <th>Time</th>
                         <th>Spares Used</th>
@@ -94,10 +94,10 @@
             for (let i = 1; i < allfaults.length; i++) {
                 const elem = allfaults[i];
                 faultsTable.innerHTML += `<tr>
-                                    <td>${elem[1]}</td>
+                                    <td>${elem[1].slice(0, 10)}</td>
                                     <td>${elem[2]}</td>
                                     <td>${elem[3]}</td>
-                                    <td>${elem[4]}</td>
+                                    <td>${elem[4].slice(0, 10)}</td>
                                     <td>${elem[5]}</td>
                                     <td>${elem[6]}</td>
                                     <td>${elem[7]}</td>
