@@ -62,7 +62,7 @@
             buildTable(localFaults)
         }
         //fetching faults from google sheet
-        fetch('https://script.google.com/macros/s/AKfycbwd5f322SUC3kmyR4AbX-ni5ZCuvYWndrp6rvUi6FOvH_lUziwukvxWZM6DYzKa7DLH/exec?machine=' + machine, {
+        fetch('https://script.google.com/macros/s/AKfycbxlRsTGzEjcXdCUwxeD4Kx5G5WcITxgI4J47jaAbDuWg4lcepcf8JrK8qH_K6_udK9c/exec?machine=' + machine, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -94,10 +94,10 @@
             for (let i = 1; i < allfaults.length; i++) {
                 const elem = allfaults[i];
                 faultsTable.innerHTML += `<tr>
-                                    <td>${elem[1].slice(0, 10)}</td>
+                                    <td>${String(elem[1]).slice(0, 10)}</td>
                                     <td>${elem[2]}</td>
                                     <td>${elem[3]}</td>
-                                    <td>${elem[4].slice(0, 10)}</td>
+                                    <td>${String(elem[4]).slice(0, 10)}</td>
                                     <td>${elem[5]}</td>
                                     <td>${elem[6]}</td>
                                     <td>${elem[7]}</td>
