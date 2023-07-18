@@ -17,14 +17,17 @@
     <div class="alert alert-danger py-1" style='display:none' id="alert" role="alert">
         alert
     </div>
-    <div class="container-fluid my-3 mb-5">
+    <div class="container-fluid mt-2 mb-5">
+        <div class="d-flex justify-content-between">
+            <a href="faults-record.html" class="text-decoration-none">&larr; Back</a>
+            <a href="#" onclick="exportTableToCSV('Faults')" class=''>Export</a>
+        </div>
         <div class="d-flex justify-content-between">
             <div class="d-flex">
                 <h5 class="text-center" id="heading">All faults of </h5>
                 <a href="add-faults.html" id="addFault" class='ms-3'><i class="fs-5 bi bi-plus-circle"></i></a>
             </div>
             <span class="text-success" id="spinner"><i class="fs-5 bi bi-cloud-arrow-down"></i></span>
-            <a href="#" onclick="exportTableToCSV('Faults')" class=''>Export</a>
         </div>
         <div class="my-3">
             <table id="table_id" class="table-light table table-striped table-bordered w-100">

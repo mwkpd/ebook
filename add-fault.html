@@ -22,7 +22,8 @@
             <div class="row">
                 <div class='mb-3 col-md-4 col-sm-12'>
                     <label for='date' class='form-label float-start'>Ocuurred On Date</label>
-                    <input required type='date' class='form-control' id='date' name='date'>
+                    <input required type='date' onchange="$('#rectification_date').val($('#date').val())"
+                        class='form-control' id='date' name='date'>
                 </div>
                 <div class='mb-3 col-md-4 col-sm-12'>
                     <label for='sub_category' class='form-label float-start'>Cateogry</label>
@@ -115,6 +116,9 @@
                         $('#spinner').hide();
                     });
             })
+            function setRectiDate() {
+                $('#rectification_date').val($('#date').val())
+            }
         </script>
     </div>
 
