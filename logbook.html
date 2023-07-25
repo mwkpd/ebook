@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Machine Faults</title>
+    <title>Logbook</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
@@ -17,15 +17,15 @@
     <div class="alert alert-danger py-1" style='display:none' id="alert" role="alert">
         alert
     </div>
-    <div class="container-fluid mt-2 mb-5">
+    <div class="container mt-2 mb-5">
         <div class="d-flex justify-content-between">
-            <a href="faults-record.html" class="text-decoration-none">&larr; Back</a>
-            <a href="#" onclick="exportTableToCSV('Faults')" class=''>Export</a>
+            <a href="all_logbooks.html" class="text-decoration-none">&larr; Back</a>
+            <a href="#" onclick="exportTableToCSV('Logbook')" class=''>Export</a>
         </div>
         <div class="d-flex justify-content-between">
             <div class="d-flex">
-                <h5 class="text-center" id="heading">All faults of </h5>
-                <a href="add-faults.html" id="addFault" class='ms-3'><i class="fs-5 bi bi-plus-circle"></i></a>
+                <h5 class="text-center" id="heading">Logbook of </h5>
+                <a href="add-log.html" id="addLog" class='ms-3'><i class="fs-5 bi bi-plus-circle"></i></a>
             </div>
             <span class="text-success" id="spinner"><i class="fs-5 bi bi-cloud-arrow-down"></i></span>
         </div>
@@ -34,13 +34,9 @@
                 <thead>
                     <tr>
                         <th style="width: 70px;">Date</th>
-                        <th style="min-width: 250px;">Fault</th>
+                        <th style="min-width: 300px;">Work</th>
                         <th>Category</th>
-                        <th style="width: 70px;">Repair Date</th>
-                        <th style="min-width: 300px;">Investigation, findings and rectification</th>
-                        <th>Time</th>
-                        <th>Spares Used</th>
-                        <th>Remark</th>
+                        <th>Work Done By</th>
                     </tr>
                 </thead>
                 <tbody id="tbody">
@@ -55,17 +51,17 @@
     <script>
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const machine = urlParams.get('machine')
-        $('#addFault').attr("href", `add-fault.html?machine=${machine}`)
-        document.getElementById('heading').innerText = `All faults of ${machine}`;
+        const machine = urlParams.get('book')
+        $('#addLog').attr("href", `add-log.html?book=${machine}`)
+        document.getElementById('heading').innerText = `Logbook of ${machine}`;
         //fetching faults from local storage
-        let localFaults = localStorage.getItem(machine + '-faults');
-        if (localFaults) {
-            localFaults = JSON.parse(localFaults);
-            buildTable(localFaults)
+        let localLogbook = localStorage.getItem(machine + '-logbook');
+        if (localLogbook) {
+            localLogbook = JSON.parse(localLogbook);
+            buildTable(localLogbook)
         }
         //fetching faults from google sheet
-        fetch('https://script.google.com/macros/s/AKfycbwbQ8fLmL0uapZLdTTJmkcVx23dwQi7g30l9nyEmxOfU88gUwPGL5BdBcQxf1m7nLf4/exec?machine=' + machine, {
+        fetch('https://script.google.com/macros/s/AKfycbzjXLDFr4Q0NVZMMo3H0pkCbCU9uQY2M6WTgzQKQr2Wxf0Aut5zi64KGQUPemIOPZJf/exec?logbook=' + machine, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -73,12 +69,10 @@
         })
             .then(response => response.json())
             .then(response => {
-                allfaults = response.data;
-                // console.log(allfaults);
-                // if (JSON.stringify(localFaults) !== JSON.stringify(allfaults)) {
-                buildTable(allfaults)
-                localStorage.setItem(machine + '-faults', JSON.stringify(allfaults));
-                // console.log('updated')
+                logbook = response.data;
+                // if (JSON.stringify(localLogbook) !== JSON.stringify(logbook)) {
+                buildTable(logbook)
+                localStorage.setItem(machine + '-logbook', JSON.stringify(logbook));
                 // }
                 document.getElementById('spinner').classList.add('d-none')
             })
@@ -91,22 +85,18 @@
                 console.error('Error:', error);
                 document.getElementById('spinner').classList.add('d-none')
             });
-        function buildTable(allfaults) {
+        function buildTable(logs) {
             $('#table_id').DataTable().destroy();
-            faultsTable = document.getElementById('tbody');
-            faultsTable.innerHTML = '';
-            let n = allfaults.length
+            tBody = document.getElementById('tbody');
+            tBody.innerHTML = '';
+            let n = logs.length
             for (let i = n - 1; i > 0; i--) {
-                const elem = allfaults[i];
-                faultsTable.innerHTML += `<tr>
-                                    <td>${String(elem[1]).slice(0, 10)}</td>
+                const elem = logs[i];
+                tBody.innerHTML += `<tr>
+                                    <td>${String(elem[0]).slice(0, 10)}</td>
+                                    <td>${elem[1]}</td>
                                     <td>${elem[2]}</td>
                                     <td>${elem[3]}</td>
-                                    <td>${String(elem[4]).slice(0, 10)}</td>
-                                    <td>${elem[5]}</td>
-                                    <td>${elem[6]}</td>
-                                    <td>${elem[7]}</td>
-                                    <td>${elem[8]}</td>
                                  </tr>`;
             }
             let table = $('#table_id').DataTable({

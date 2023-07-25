@@ -8,11 +8,11 @@ function doGet(req) {
         for (let i = 0; i < sheets.length; i++) {
             sheetNames.push(sheets[i].getName())
         }
-        return ContentService.createTextOutput(JSON.stringify({ sheetNames })).setMimeType(ContentService.MimeType.JSON);
+        return ContentService.createTextOutput(JSON.stringify({ 'logbooks': sheetNames })).setMimeType(ContentService.MimeType.JSON);
     }
     //get sheet data
-    let machine = req.parameter.machine;
-    let sheet = doc.getSheetByName(machine);
+    let logbook = req.parameter.logbook;
+    let sheet = doc.getSheetByName(logbook);
     let values = sheet.getDataRange().getValues();
     return ContentService.createTextOutput(JSON.stringify({ data: values })).setMimeType(ContentService.MimeType.JSON);
 }
@@ -24,8 +24,7 @@ function doPost(e) {
         }
         const sheets = SpreadsheetApp.getActiveSpreadsheet()
         const sheet = sheets.getSheetByName(data.machine);
-        lastRow = sheet.getLastRow();
-        sheet.appendRow([lastRow, "'" + data.date, data.fault, data.sub_category, data.rectification_date, data.rectification, data.time, data.spares_used, data.remark])
+        sheet.appendRow(["'" + data.date, data.work, data.category, data.work_by])
         return ContentService.createTextOutput(JSON.stringify({ 'message': 'success' })).setMimeType(ContentService.MimeType.JSON);
     } catch {
         return ContentService.createTextOutput(JSON.stringify({ 'message': 'failed' })).setMimeType(ContentService.MimeType.JSON);
