@@ -25,7 +25,7 @@ function doPost(e) {
         const sheets = SpreadsheetApp.getActiveSpreadsheet()
         const sheet = sheets.getSheetByName(data.machine);
         lastRow = sheet.getLastRow();
-        sheet.appendRow([lastRow, "'" + data.date, data.fault, data.sub_category, data.rectification_date, data.rectification, data.time, data.spares_used, data.remark])
+        sheet.appendRow([lastRow, "'" + data.date, data.fault, data.sub_category, "'" + data.rectification_date, data.rectification, data.time, data.spares_used, data.remark])
         return ContentService.createTextOutput(JSON.stringify({ 'message': 'success' })).setMimeType(ContentService.MimeType.JSON);
     } catch {
         return ContentService.createTextOutput(JSON.stringify({ 'message': 'failed' })).setMimeType(ContentService.MimeType.JSON);
