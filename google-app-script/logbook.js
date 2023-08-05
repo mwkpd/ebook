@@ -1,4 +1,8 @@
 function doGet(req) {
+    let authKey = req.parameter.authKey;
+    if (authKey != 'your_auth_key') {
+        return ContentService.createTextOutput(JSON.stringify({ 'message': 'Invalid authKey' })).setMimeType(ContentService.MimeType.JSON);
+    }
     let doc = SpreadsheetApp.getActiveSpreadsheet();
     let querySheetNames = req.parameter.querySheetNames;
     //get sheet names
@@ -19,8 +23,8 @@ function doGet(req) {
 function doPost(e) {
     try {
         let data = JSON.parse(e.postData.contents);
-        if (data.authKey != 'yourAuthKey') {
-            return ContentService.createTextOutput(JSON.stringify({ 'message': 'wrong authKey' })).setMimeType(ContentService.MimeType.JSON);
+        if (data.authKey != 'your_auth_key') {
+            return ContentService.createTextOutput(JSON.stringify({ 'message': 'Invalid authKey' })).setMimeType(ContentService.MimeType.JSON);
         }
         const sheets = SpreadsheetApp.getActiveSpreadsheet()
         const sheet = sheets.getSheetByName(data.machine);

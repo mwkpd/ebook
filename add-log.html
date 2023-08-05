@@ -64,7 +64,7 @@
                     category: document.getElementById('category').value,
                     work_by: document.getElementById('work_by').value,
                 };
-                fetch('https://script.google.com/macros/s/AKfycbzjXLDFr4Q0NVZMMo3H0pkCbCU9uQY2M6WTgzQKQr2Wxf0Aut5zi64KGQUPemIOPZJf/exec', {
+                fetch('https://script.google.com/macros/s/AKfycbyc_APb_T9DPhQWEu-grGFUgnRGcY3C_gvpHnsZev2l_rF8N2QWL5gARDZ6L0LZLzer/exec', {
                     method: 'POST',
                     body: JSON.stringify(formData),
                 })
@@ -73,7 +73,7 @@
                         if (response.message == 'success') {
                             alert('Data saved')
                             window.location.href = "/logbook.html?book=" + machine;
-                        } else if (response.message == 'wrong authKey') {
+                        } else if (response.message == 'Invalid authKey') {
                             $('#alert').html("Error! Wrong authentication key. <a href='login.html' target='_blank'>Set Key</a>")
                             $('#alert').show()
                             alert('Error! Wrong auathentication key')

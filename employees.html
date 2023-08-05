@@ -47,7 +47,7 @@
             localEmployees = JSON.parse(localEmployees);
             buildTable(localEmployees)
         }
-        fetch('https://script.google.com/macros/s/AKfycbwr4OAGA1NVIlV3EXR1pzcQN7TjWNM9aYhteDDCqTPdVf_2YtuRsRmBmmIM_nRB2W6Y/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbxPw6TsNiFtMXVL7yzaUtE9ECsMl1fXbgjejR_rwbgSwaqx2X3G7w3W8aqehpIuRqnh/exec?authKey=' + localStorage.getItem('authKey'), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

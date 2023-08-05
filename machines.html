@@ -54,7 +54,7 @@
             localMachinesTable = JSON.parse(localMachinesTable);
             buildTable(localMachinesTable)
         }
-        fetch('https://script.google.com/macros/s/AKfycbyMkgR5ZTophYSc1XaJZPWYACDPPLbkec7LMi_G9PhVhjKs9Kt6-T5xzGPoj2OBNYaR/exec', {
+        fetch('https://script.google.com/macros/s/AKfycbz4huZRo8FK1yhhy58bBLmhsUDHVpY8TghDrX4BeBU5swAQ48VOm3RN4X2wnE9Tm6Xs/exec?authKey=' + localStorage.getItem('authKey'), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -64,10 +64,15 @@
             .then(response => {
                 machinesTable = response.data;
                 // console.log(employees);
-                if (JSON.stringify(localMachinesTable) !== JSON.stringify(machinesTable)) {
-                    buildTable(machinesTable)
-                    localStorage.setItem('machinesTable', JSON.stringify(machinesTable));
-                    // console.log('updated')
+                if (response.data) {
+                    if (JSON.stringify(localMachinesTable) !== JSON.stringify(machinesTable)) {
+                        buildTable(machinesTable)
+                        localStorage.setItem('machinesTable', JSON.stringify(machinesTable));
+                        // console.log('updated')
+                    }
+                } else {
+                    $('#alert').text(response.message)
+                    $('#alert').show()
                 }
                 document.getElementById('spinner').classList.add('d-none')
             })

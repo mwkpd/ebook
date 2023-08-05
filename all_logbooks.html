@@ -28,7 +28,7 @@
             localLogbooks = JSON.parse(localLogbooks);
             buildTable(localLogbooks)
         }
-        fetch('https://script.google.com/macros/s/AKfycbzjXLDFr4Q0NVZMMo3H0pkCbCU9uQY2M6WTgzQKQr2Wxf0Aut5zi64KGQUPemIOPZJf/exec?querySheetNames=true', {
+        fetch('https://script.google.com/macros/s/AKfycbyc_APb_T9DPhQWEu-grGFUgnRGcY3C_gvpHnsZev2l_rF8N2QWL5gARDZ6L0LZLzer/exec?querySheetNames=true&authKey=' + localStorage.getItem('authKey'), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

@@ -28,7 +28,7 @@
             localMachines = JSON.parse(localMachines);
             buildTable(localMachines)
         }
-        fetch('https://script.google.com/macros/s/AKfycbwvEZSZ1tPrzWroi5F3fTrcvvv7W6Eu4UIY6P28IddDgBDqB-EcOiKD0BIL1XNEMFr3/exec?querySheetNames=true', {
+        fetch('https://script.google.com/macros/s/AKfycbzugG-FNOe80YwLuX03H_AZDJhySjqz1n20OFK21SYCN4BjVruL3ZnEmj4sIYzB4yo8/exec?querySheetNames=true&authKey=' + localStorage.getItem('authKey'), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

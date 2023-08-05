@@ -61,7 +61,7 @@
             buildTable(localLogbook)
         }
         //fetching faults from google sheet
-        fetch('https://script.google.com/macros/s/AKfycbzjXLDFr4Q0NVZMMo3H0pkCbCU9uQY2M6WTgzQKQr2Wxf0Aut5zi64KGQUPemIOPZJf/exec?logbook=' + machine, {
+        fetch('https://script.google.com/macros/s/AKfycbyc_APb_T9DPhQWEu-grGFUgnRGcY3C_gvpHnsZev2l_rF8N2QWL5gARDZ6L0LZLzer/exec?logbook=' + machine + '&authKey=' + localStorage.getItem('authKey'), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
