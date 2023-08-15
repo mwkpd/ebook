@@ -29,14 +29,22 @@
                 <li class='nav-item'>
                     <a class='nav-link active ' aria-current='page' href='documents.html'>Documents</a>
                 </li>
-                <li class='nav-item'>
-                    <a class='nav-link active ' aria-current='page' href='employees.html'>Employees</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        Employees
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="employees.html">All Employees</a></li>
+                        <li><a class="dropdown-item" href="wrp_roster.html">WRP Roster</a></li>
+                    </ul>
                 </li>
                 <li class='nav-item'>
                     <a class='nav-link active ' aria-current='page' href='help.html'>Help</a>
                 </li>
             </ul>
-            <a href="#" onclick="logOut()" class="btn btn-primary">Logout</a>
+            <a href="#" id="logout" onclick="logOut()" class="btn btn-primary">Logout</a>
+            <a href="login.html" id="login" class="btn btn-primary">Login</a>
         </div>
     </div>
 </nav>
@@ -52,10 +60,13 @@
 <script>
     function logOut() {
         localStorage.clear();
-        window.location.href = 'login.html'
+        window.location.href = 'index.html'
     }
     let loggedIn = localStorage.getItem('loggedIn')
     if (loggedIn != 'yes') {
-        window.location.href = 'login.html'
-    } 
+        // window.location.href = 'login.html'
+        document.getElementById('logout').classList.add('d-none')
+    } else {
+        document.getElementById('login').classList.add('d-none')
+    }
 </script>
