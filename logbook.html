@@ -34,8 +34,8 @@
                 <thead>
                     <tr>
                         <th style="width: 70px;">Date</th>
-                        <th style="min-width: 300px;">Work</th>
                         <th>Category</th>
+                        <th style="min-width: 300px;">Work</th>
                         <th>Work Done By</th>
                     </tr>
                 </thead>
@@ -94,8 +94,8 @@
                 const elem = logs[i];
                 tBody.innerHTML += `<tr>
                                     <td>${String(elem[0]).slice(0, 10)}</td>
-                                    <td>${elem[1]}</td>
                                     <td>${elem[2]}</td>
+                                    <td>${elem[1]}</td>
                                     <td>${elem[3]}</td>
                                  </tr>`;
             }

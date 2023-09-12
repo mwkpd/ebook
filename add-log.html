@@ -49,6 +49,7 @@
             if (!authKey) {
                 window.location.href = "login.html";
             }
+            document.getElementById('date').valueAsDate = new Date();
             const queryString = window.location.search;
             const urlParams = new URLSearchParams(queryString);
             const machine = urlParams.get('book')
