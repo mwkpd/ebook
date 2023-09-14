@@ -18,7 +18,7 @@
     </div>
     <div class="container my-3">
         <div class="d-flex justify-content-between">
-            <a href="all_articles.html" class="text-decoration-none">&larr; Back</a>
+            <a href="#" onclick="window.history.back()" class="text-decoration-none">&larr; Back</a>
             <div class="spinner-border" role="status" id="spinner">
                 <span class="visually-hidden">Loading...</span>
             </div>
@@ -51,7 +51,7 @@
                 title.innerText = article[0]
                 tags.innerText = 'Tags: ' + article[1]
                 body.innerHTML = article[2]
-                lastUpdate.innerText = 'Last Update: ' + article[3]
+                lastUpdate.innerText = 'Updated On: ' + article[3]
             })
             .catch(error => {
                 $('#alert').text('Error! Some error occurred')

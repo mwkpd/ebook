@@ -63,7 +63,7 @@
             for (let i = 1; i < n; i++) {
                 const elem = articles[i];
                 pageBody.innerHTML += `<li>
-                <a href="article.html?id=${i}" class="fs-5">${elem[0]}</a><br>
+                <a href="article.html?id=${i}&title=${elem[0].replace(/\s/g, '-')}" class="fs-5">${elem[0]}</a><br>
                 <span>Tags: ${elem[1]}</span>
             </li>`;
             }
